@@ -26,7 +26,7 @@ No accounts, no server, no analytics: your data is stored locally in your browse
 
 **[→ live demo](https://aoqyy.github.io/motd/)**
 
-![motd screenshot](docs/screenshot.png)
+![motd trailer](docs/black_trailer.gif)
 
 ## Terminal
 
