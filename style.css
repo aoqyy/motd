@@ -24,21 +24,42 @@ body {
   justify-content: center;
 }
 
-.path, .grid {
+.term, .grid {
   width: 100%;
   max-width: 72rem;
   margin-inline: auto;
 }
 
-/* header */
-.path {
+/* terminal header */
+.term { margin-bottom: 2rem; }
+.term__line {
   display: flex;
   align-items: baseline;
   color: var(--muted);
-  margin-bottom: 2rem;
 }
-.cursor { animation: blink 1s steps(1) infinite; }
-@keyframes blink { 50% { opacity: 0; } }
+.term__prompt { white-space: nowrap; cursor: text; }
+.term__prompt::after { content: ">"; margin-right: 0.6em; }
+
+.cmd {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--fg);
+  font: inherit;
+  caret-color: var(--fg);
+}
+.cmd::placeholder { color: var(--line); }
+
+.term__output {
+  font-family: inherit;
+  color: var(--muted);
+  white-space: pre-wrap;
+  line-height: 1.6;
+  margin-top: 0.5rem;
+  min-height: 1.6em; /* keeps the grid from jumping on one-line output */
+}
 
 .badge {
   margin-left: 1rem;
@@ -125,7 +146,7 @@ body {
   cursor: pointer;
 }
 .btn:hover, .btn--main { color: var(--fg); }
-#settings-btn { margin-left: auto; }
+#settings-btn { margin-left: 1rem; }
 
 /* settings dialog */
 dialog {

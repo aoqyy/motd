@@ -9,10 +9,15 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="path">
-    <span id="path"></span><span class="cursor">_</span>
-    <span class="badge" id="demo-badge" hidden>demo</span>
-    <button class="btn" id="settings-btn">[settings]</button>
+  <header class="term">
+    <div class="term__line">
+      <label class="term__prompt" for="cmd" id="path"></label>
+      <input id="cmd" class="cmd" autocomplete="off" spellcheck="false" autofocus
+             placeholder="type help" aria-label="command">
+      <span class="badge" id="demo-badge" hidden>demo</span>
+      <button class="btn" id="settings-btn">[settings]</button>
+    </div>
+    <pre class="term__output" id="output" aria-live="polite"></pre>
   </header>
 
   <main class="grid">
@@ -67,5 +72,6 @@
   <script src="widgets/summary.js"></script>
   <script src="app.js"></script>
   <script src="settings.js"></script>
+  <script src="terminal.js"></script>
 </body>
 </html>
