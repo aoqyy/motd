@@ -1,10 +1,11 @@
 const BAR_WIDTH = 20;
 
 function startOfWeek(d) {
-  const day = (d.getDay() + 6) % 7; // понедельник = 0
+  const day = (d.getDay() + 6) % 7; // monday = 0
   return new Date(d.getFullYear(), d.getMonth(), d.getDate() - day);
 }
 
+// [label, start, end] for each period that contains "now"
 function periods(now) {
   const y = now.getFullYear(), m = now.getMonth(), d = now.getDate();
   const week = startOfWeek(now);

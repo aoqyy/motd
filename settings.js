@@ -2,12 +2,12 @@ const settingsEl = document.getElementById("settings");
 const form = settingsEl.querySelector("form");
 const importFile = document.getElementById("import-file");
 
-// [{date, title}] -> "2026-12-25 | экзамен"
+// [{date, title}] -> "2026-12-25 | exam"
 function toLines(items, a, b) {
   return items.map((item) => `${item[a]} | ${item[b]}`).join("\n");
 }
 
-// "2026-12-25 | экзамен" -> [{date, title}], пустые и кривые строки пропускаем
+// "2026-12-25 | exam" -> [{date, title}], skips empty and broken lines
 function fromLines(text, a, b) {
   return text
     .split("\n")
@@ -30,7 +30,7 @@ function saveSettings() {
   const cityName = f.city.value.trim() || DEMO_DATA.city.name;
   saveData({
     name: f.username.value.trim() || "guest",
-    // координаты сохраняем, только если город не поменялся
+    // keep coordinates only if the city didn't change
     city: cityName === data.city.name ? data.city : { name: cityName },
     deadlines: fromLines(f.deadlines.value, "date", "title"),
     links: fromLines(f.links.value, "title", "url"),
@@ -55,12 +55,12 @@ async function importData() {
     saveData(JSON.parse(await file.text()));
     location.reload();
   } catch {
-    alert("это не похоже на бэкап start");
+    alert("this doesn't look like a start backup");
   }
 }
 
 function resetData() {
-  if (!confirm("удалить все свои данные и вернуться к демо?")) return;
+  if (!confirm("delete all your data and go back to demo?")) return;
   localStorage.removeItem(STORAGE_KEY);
   location.reload();
 }

@@ -20,6 +20,7 @@ body {
   padding: 2rem;
 }
 
+/* header */
 .path {
   display: flex;
   align-items: baseline;
@@ -27,7 +28,6 @@ body {
   max-width: 72rem;
   margin: 0 auto 2rem;
 }
-
 .cursor { animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 
@@ -38,6 +38,7 @@ body {
   font-size: 0.75rem;
 }
 
+/* layout */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
@@ -46,7 +47,13 @@ body {
   margin: 0 auto;
 }
 
-.card { border: 1px solid var(--line); padding: 1.25rem; }
+.card {
+  border: 1px solid var(--line);
+  padding: 1.25rem;
+  min-width: 0;
+  overflow: hidden;
+  container-type: inline-size; /* enables cqi units inside the card */
+}
 .card--wide { grid-column: 1 / -1; }
 
 .card h2, .settings h2 {
@@ -59,19 +66,32 @@ body {
 
 .muted { color: var(--muted); }
 
+/* clock */
 .clock__time { font-size: 4rem; font-weight: 700; line-height: 1; }
 .clock__date { margin-top: 0.5rem; color: var(--muted); }
 .clock__hello { margin-top: 1rem; }
 
-.card { min-width: 0; overflow: hidden; container-type: inline-size; }
-
-/* строка = 32 символа, символ JetBrains Mono ≈ 0.6em → 32 × 0.6 ≈ 19.2em, берём 20 с запасом */
+/* progress: a line is 32 chars, one char ≈ 0.6em -> ~20em fits the card */
 .progress {
   font-family: inherit;
   line-height: 1.6;
   font-size: min(1rem, 100cqi / 20);
 }
 
+/* deadlines */
+.list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+.list li { display: flex; justify-content: space-between; gap: 1rem; }
+.list .title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.list .when { color: var(--muted); white-space: nowrap; }
+.list .urgent .when { color: var(--fg); font-weight: 700; }
+.list .past { color: var(--muted); text-decoration: line-through; }
+
+/* links */
+.links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; }
+.links a { color: var(--fg); text-decoration: none; }
+.links a:hover { text-decoration: underline; }
+
+/* buttons */
 .btn {
   background: none;
   border: none;
@@ -82,6 +102,7 @@ body {
 .btn:hover, .btn--main { color: var(--fg); }
 #settings-btn { margin-left: auto; }
 
+/* settings dialog */
 dialog {
   margin: auto;
   width: min(36rem, 90vw);

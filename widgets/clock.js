@@ -14,10 +14,11 @@ function initClock(el) {
 }
 
 function renderClock(el, data, now) {
+  // en-GB gives 24h time, en-US gives "Thursday, November 26"
   el.querySelector(".clock__time").textContent =
-    now.toLocaleTimeString("en-EN", { hour: "2-digit", minute: "2-digit" });
+    now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
   el.querySelector(".clock__date").textContent =
-    now.toLocaleDateString("en-EN", { weekday: "long", day: "numeric", month: "long" });
+    now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
   el.querySelector(".clock__hello").textContent =
     `${greeting(now.getHours())}, ${data.name}.`;
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,9 +18,9 @@
   <main class="grid">
     <section class="card card--wide" id="clock"></section>
     <section class="card" id="progress"></section>
-    <section class="card"><h2>deadlines</h2><p class="muted">// soon</p></section>
-    <section class="card"><h2>weather</h2><p class="muted">// soon</p></section>
-    <section class="card"><h2>links</h2><p class="muted">// soon</p></section>
+    <section class="card" id="deadlines"></section>
+    <section class="card" id="weather"><h2>weather</h2><p class="muted">// soon</p></section>
+    <section class="card" id="links"></section>
   </main>
 
   <dialog id="settings">
@@ -35,12 +35,12 @@
         <input name="city" autocomplete="off">
       </label>
 
-      <label>deadlines <span class="muted">// дата | название, по одному в строке</span>
-        <textarea name="deadlines" rows="4" placeholder="2026-12-25 | экзамен"></textarea>
+      <label>deadlines <span class="muted">// date | title, one per line</span>
+        <textarea name="deadlines" rows="4" placeholder="2026-12-25 | exam"></textarea>
       </label>
 
-      <label>links <span class="muted">// название | ссылка</span>
-        <textarea name="links" rows="4" placeholder="github | https://github.com"></textarea>
+      <label>links <span class="muted">// title | url, one per line</span>
+        <textarea name="links" rows="4" placeholder="github | github.com"></textarea>
       </label>
 
       <div class="settings__row">
@@ -61,6 +61,8 @@
   <script src="storage.js"></script>
   <script src="widgets/clock.js"></script>
   <script src="widgets/progress.js"></script>
+  <script src="widgets/deadlines.js"></script>
+  <script src="widgets/links.js"></script>
   <script src="app.js"></script>
   <script src="settings.js"></script>
 </body>
