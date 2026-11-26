@@ -22,7 +22,7 @@
 
 **m**essage **o**f **t**he **d**ay: a minimal terminal-style start page for your browser.
 Type commands, search anything, keep your deadlines, weather, links and GitHub activity in one place.
-No accounts, no server, your data never leaves your browser.
+No accounts, no server, no analytics: your data is stored locally in your browser.
 
 **[→ live demo](https://aoqyy.github.io/motd/)**
 
@@ -44,6 +44,7 @@ C:\aoki\motd> yt lofi hip hop
 | anything else                                             | search Google                                              |
 | `add 2026-12-25 exam` / `add +3 report`                   | add a deadline by date or in N days                        |
 | `done exam`                                               | remove a deadline, part of the title is enough             |
+| `undo`                                                    | bring back the last deadline removed with `done`           |
 | `prefix` · `prefix add so <url with %s>` · `prefix rm so` | list, add or remove your own search prefixes               |
 | `activity aoqyy`                                          | show the GitHub contribution grid for a user               |
 | `weather tokyo`                                           | change the city                                            |
@@ -70,9 +71,17 @@ Dark and light theme follow your system.
 
 ## Privacy
 
-Everything you enter is stored in your browser's `localStorage`.
+Everything you enter is stored only in your browser's `localStorage`. There are no accounts, no server and no analytics.
+The page talks to these services and nothing else:
+
+- [Open-Meteo](https://open-meteo.com): the city name you set (to find its coordinates) and those coordinates (for the forecast)
+- [github-contributions-api](https://github.com/grubersjoe/github-contributions-api): the GitHub username you set for the activity grid
+- [Google Fonts](https://fonts.google.com): loads the JetBrains Mono font
+- whatever search engine or site you open from the terminal
+
 The repository only contains code and demo data, so anyone opening the page sees the demo until they add their own data.
 Use `[export]` in settings to back up your data or move it to another browser.
+Imported backups are validated: unknown fields are dropped and only `http(s)` links and prefixes are accepted.
 
 ## Usage
 

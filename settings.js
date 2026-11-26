@@ -31,18 +31,16 @@ function openSettings() {
 function saveSettings() {
   const f = form.elements;
   const cityName = f.city.value.trim() || DEFAULTS.city.name;
-  saveData({
-    name: f.username.value.trim() || DEFAULTS.name,
+  saveData(sanitizeData({
+    name: f.username.value,
     // keep coordinates only if the city didn't change
     city: cityName === data.city.name ? data.city : { name: cityName },
     deadlines: fromLines(f.deadlines.value, "date", "title"),
     links: fromLines(f.links.value, "title", "url"),
-    linkStyle: f.linkStyle.value === "{}" ? "{}" : "[]",
-    prefixes: fromLines(f.prefixes.value, "key", "url")
-      .map((p) => ({ key: p.key.toLowerCase(), url: p.url }))
-      .filter((p) => p.url.includes("%s") && safeUrl(p.url)),
-    github: cleanGithubUser(f.github.value),
-  });
+    linkStyle: f.linkStyle.value,
+    prefixes: fromLines(f.prefixes.value, "key", "url"),
+    github: f.github.value,
+  }));
   location.reload();
 }
 
@@ -56,11 +54,14 @@ function exportData() {
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 
+// backups can come from anywhere, so everything goes through sanitizeData
 async function importData() {
   const file = importFile.files[0];
   if (!file) return;
   try {
-    saveData(JSON.parse(await file.text()));
+    const parsed = JSON.parse(await file.text());
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error("not an object");
+    saveData(sanitizeData(parsed));
     location.reload();
   } catch {
     alert("this doesn't look like a motd backup");

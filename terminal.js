@@ -16,6 +16,7 @@ const HELP = `search    g gh yt w r ani <query>      e.g. yt lofi
 open      <link name> | <url>          e.g. github, vk.com
 add       <YYYY-MM-DD | +days> <title> e.g. add +3 report
 done      <title>                      remove a deadline
+undo                                   bring back the last removed deadline
 prefix    list | add <key> <url> | rm <key>
                                        e.g. prefix add so https://stackoverflow.com/search?q=%s
 activity  <github username>            show your contribution grid
@@ -32,9 +33,13 @@ const output = document.getElementById("output");
 let history = loadHistory();
 let historyPos = history.length;
 
+// deadlines removed with done, newest last; lives until the page reloads
+const undoStack = [];
+
 function loadHistory() {
   try {
-    return JSON.parse(localStorage.getItem(HISTORY_KEY)) ?? [];
+    const saved = JSON.parse(localStorage.getItem(HISTORY_KEY));
+    return Array.isArray(saved) ? saved.filter((s) => typeof s === "string") : [];
   } catch {
     return [];
   }
@@ -51,12 +56,18 @@ function print(text) {
   output.textContent = text;
 }
 
+// last line of defense: never navigate to anything but http(s)
 function go(url, newTab) {
+  const safe = safeUrl(url);
+  if (!safe) {
+    print("✗ blocked: only http(s) links can be opened");
+    return;
+  }
   if (newTab) {
-    window.open(url, "_blank", "noopener");
+    window.open(safe, "_blank", "noopener");
     print("→ opened in a new tab");
   } else {
-    location.href = url;
+    location.href = safe;
   }
 }
 
@@ -141,9 +152,21 @@ const COMMANDS = {
     if (!matches.length) return `✗ no deadline matching "${query}"`;
     if (matches.length > 1) return `✗ which one? ${matches.map((d) => d.title).join(", ")}`;
 
-    data.deadlines = data.deadlines.filter((d) => d !== matches[0]);
+    const removed = matches[0];
+    data.deadlines = data.deadlines.filter((d) => d !== removed);
+    undoStack.push(removed);
     save();
-    return `✓ done: ${matches[0].title}`;
+    return `✓ done: ${removed.title} · undo to bring it back`;
+  },
+
+  undo() {
+    const restored = undoStack.pop();
+    if (!restored) return "✗ nothing to undo";
+
+    data.deadlines.push(restored);
+    save();
+    const more = undoStack.length ? ` · ${undoStack.length} more to undo` : "";
+    return `✓ restored "${restored.title}" · ${whenText(daysLeft(restored.date, new Date()))}${more}`;
   },
 
   prefix(args) {
@@ -158,6 +181,7 @@ const COMMANDS = {
 
     if (action === "add") {
       if (!key || !url) return "✗ usage: prefix add <key> <url with %s>";
+      if (!/^[a-z0-9-]+$/.test(key)) return "✗ key can only have letters, digits and -";
       if (Object.hasOwn(COMMANDS, key)) return `✗ "${key}" is a command`;
       if (!url.includes("%s") || !safeUrl(url)) return "✗ url must be http(s) and contain %s";
 
@@ -198,7 +222,7 @@ const COMMANDS = {
   },
 
   weather(args) {
-    const city = args.join(" ");
+    const city = args.join(" ").slice(0, 100);
     if (!city) return `→ ${data.city.name}`;
 
     const note = ensureOwnData();
@@ -239,15 +263,13 @@ function run(line, newTab) {
   }
 
   const link = data.links.find((l) => l.title.toLowerCase() === input.toLowerCase());
-  const linkUrl = link && safeUrl(link.url);
-  if (linkUrl) {
-    go(linkUrl, newTab);
+  if (link) {
+    go(link.url, newTab);
     return;
   }
 
-  const directUrl = looksLikeUrl(input) && safeUrl(input);
-  if (directUrl) {
-    go(directUrl, newTab);
+  if (looksLikeUrl(input)) {
+    go(input, newTab);
     return;
   }
 
