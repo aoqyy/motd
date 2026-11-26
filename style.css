@@ -125,3 +125,7 @@ dialog::backdrop { background: rgb(0 0 0 / 0.7); }
 }
 .settings input:focus, .settings textarea:focus { outline: none; border-color: var(--fg); }
 .settings__row { display: flex; gap: 1rem; justify-content: flex-end; }
+/* weather */
+.weather__temp { font-size: 2.5rem; font-weight: 700; line-height: 1; }
+.weather__desc { margin: 0.5rem 0; }
+.weather__meta { font-size: 0.85rem; }
