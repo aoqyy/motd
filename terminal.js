@@ -3,7 +3,7 @@ const HISTORY_MAX = 50;
 const DEFAULT_ENGINE = "g";
 
 // %s is replaced with the encoded query
-const SEARCH_ENGINES = {
+const BUILTIN_ENGINES = {
   g:   "https://www.google.com/search?q=%s",
   gh:  "https://github.com/search?q=%s",
   yt:  "https://www.youtube.com/results?search_query=%s",
@@ -16,6 +16,8 @@ const HELP = `search    g gh yt w r ani <query>      e.g. yt lofi
 open      <link name> | <url>          e.g. github, vk.com
 add       <YYYY-MM-DD | +days> <title> e.g. add +3 report
 done      <title>                      remove a deadline
+prefix    list | add <key> <url> | rm <key>
+                                       e.g. prefix add so https://stackoverflow.com/search?q=%s
 weather   <city>                       change city
 name      <name>                       change your name
 settings                               open settings
@@ -57,8 +59,18 @@ function go(url, newTab) {
   }
 }
 
+// built-in engines with the user's prefixes on top, so a custom one can override "g"
+function engines() {
+  const custom = data.prefixes.map((p) => [p.key.toLowerCase(), p.url]);
+  return { ...BUILTIN_ENGINES, ...Object.fromEntries(custom) };
+}
+
+function isCustomPrefix(key) {
+  return data.prefixes.some((p) => p.key.toLowerCase() === key);
+}
+
 function searchUrl(engine, query) {
-  return SEARCH_ENGINES[engine].replace("%s", encodeURIComponent(query));
+  return engines()[engine].replace("%s", encodeURIComponent(query));
 }
 
 // "vk.com", "github.com/aoqyy", "https://..." but not "hello world"
@@ -130,6 +142,43 @@ const COMMANDS = {
     return `✓ done: ${matches[0].title}`;
   },
 
+  prefix(args) {
+    const [action = "list", rawKey, url] = args;
+    const key = rawKey?.toLowerCase();
+
+    if (action === "list") {
+      return Object.entries(engines())
+        .map(([k, u]) => `${k.padEnd(6)} ${u}${isCustomPrefix(k) ? "   *custom" : ""}`)
+        .join("\n");
+    }
+
+    if (action === "add") {
+      if (!key || !url) return "✗ usage: prefix add <key> <url with %s>";
+      if (Object.hasOwn(COMMANDS, key)) return `✗ "${key}" is a command`;
+      if (!url.includes("%s") || !safeUrl(url)) return "✗ url must be http(s) and contain %s";
+
+      const note = ensureOwnData();
+      data.prefixes = data.prefixes.filter((p) => p.key.toLowerCase() !== key);
+      data.prefixes.push({ key, url: safeUrl(url) });
+      save();
+      const overrides = Object.hasOwn(BUILTIN_ENGINES, key) ? " (overrides built-in)" : "";
+      return `✓ ${key} → ${url}${overrides}${note}`;
+    }
+
+    if (action === "rm") {
+      if (!key) return "✗ usage: prefix rm <key>";
+      if (!isCustomPrefix(key)) {
+        return Object.hasOwn(BUILTIN_ENGINES, key) ? `✗ "${key}" is built in` : `✗ no prefix "${key}"`;
+      }
+      data.prefixes = data.prefixes.filter((p) => p.key.toLowerCase() !== key);
+      save();
+      const restored = Object.hasOwn(BUILTIN_ENGINES, key) ? ", built-in restored" : "";
+      return `✓ removed ${key}${restored}`;
+    }
+
+    return "✗ usage: prefix [list | add <key> <url> | rm <key>]";
+  },
+
   weather(args) {
     const city = args.join(" ");
     if (!city) return `→ ${data.city.name}`;
@@ -166,7 +215,7 @@ function run(line, newTab) {
     return;
   }
 
-  if (Object.hasOwn(SEARCH_ENGINES, key) && args.length) {
+  if (Object.hasOwn(engines(), key) && args.length) {
     go(searchUrl(key, args.join(" ")), newTab);
     return;
   }
@@ -197,11 +246,20 @@ function completions(value) {
       .filter((s) => s.toLowerCase().startsWith(lower));
   }
 
+  if (lower.startsWith("prefix ")) {
+    const options = [
+      "prefix list",
+      "prefix add ",
+      ...data.prefixes.map((p) => `prefix rm ${p.key}`),
+    ];
+    return options.filter((s) => s.startsWith(lower));
+  }
+
   if (/\s/.test(value)) return [];
 
   const words = [
     ...Object.keys(COMMANDS).filter((c) => c !== "cls"),
-    ...Object.keys(SEARCH_ENGINES),
+    ...Object.keys(engines()),
     ...data.links.map((l) => l.title),
   ];
   return words.filter((w) => w.toLowerCase().startsWith(lower));

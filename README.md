@@ -16,17 +16,18 @@ The header is a real command line. Just start typing, the page is focused on it 
 C:\aoki\motd> yt lofi hip hop
 ```
 
-| command                                 | what it does                                               |
-| --------------------------------------- | ---------------------------------------------------------- |
-| `g` `gh` `yt` `w` `r` `ani` + query     | search Google, GitHub, YouTube, Wikipedia, Reddit, AniList |
-| `github`                                | open a saved link by its name                              |
-| `example.com`                           | open a url                                                 |
-| anything else                           | search Google                                              |
-| `add 2026-12-25 exam` / `add +3 report` | add a deadline by date or in N days                        |
-| `done exam`                             | remove a deadline, part of the title is enough             |
-| `weather tokyo`                         | change the city                                            |
-| `name aoki`                             | change your name                                           |
-| `settings` · `help` · `clear`           | open settings · show help · clear output                   |
+| command                                                   | what it does                                               |
+| --------------------------------------------------------- | ---------------------------------------------------------- |
+| `g` `gh` `yt` `w` `r` `ani` + query                       | search Google, GitHub, YouTube, Wikipedia, Reddit, AniList |
+| `github`                                                  | open a saved link by its name                              |
+| `example.com`                                             | open a url                                                 |
+| anything else                                             | search Google                                              |
+| `add 2026-12-25 exam` / `add +3 report`                   | add a deadline by date or in N days                        |
+| `done exam`                                               | remove a deadline, part of the title is enough             |
+| `weather tokyo`                                           | change the city                                            |
+| `name aoki`                                               | change your name                                           |
+| `settings` · `help` · `clear`                             | open settings · show help · clear output                   |
+| `prefix` · `prefix add so <url with %s>` · `prefix rm so` | list, add or remove your own search prefixes               |
 
 - dim inline suggestions from your history and commands, accept with `Tab` or `→`
 - `↑` `↓` to walk through history
@@ -74,7 +75,7 @@ widgets/          one file per widget
 ## Roadmap
 
 - [x] terminal with search prefixes, history and suggestions
-- [ ] custom search prefixes in settings
+- [x] custom search prefixes in settings
 - [ ] scratch note
 - [ ] GitHub contributions
 - [ ] toggle and reorder widgets

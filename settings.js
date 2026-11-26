@@ -22,6 +22,7 @@ function openSettings() {
   f.city.value = data.city.name;
   f.deadlines.value = toLines(data.deadlines, "date", "title");
   f.links.value = toLines(data.links, "title", "url");
+  f.prefixes.value = toLines(data.prefixes, "key", "url");
   settingsEl.showModal();
 }
 
@@ -34,6 +35,9 @@ function saveSettings() {
     city: cityName === data.city.name ? data.city : { name: cityName },
     deadlines: fromLines(f.deadlines.value, "date", "title"),
     links: fromLines(f.links.value, "title", "url"),
+    prefixes: fromLines(f.prefixes.value, "key", "url")
+      .map((p) => ({ key: p.key.toLowerCase(), url: p.url }))
+      .filter((p) => p.url.includes("%s") && safeUrl(p.url)),
   });
   location.reload();
 }

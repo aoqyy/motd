@@ -22,5 +22,6 @@ const DEMO_DATA = {
     { title: "youtube", url: "https://youtube.com" },
     { title: "mail", url: "https://mail.google.com" },
     { title: "translate", url: "https://translate.google.com" },
-  ],
+  ],  
+  prefixes: [], // custom search prefixes: { key, url } where url contains %s
 };
