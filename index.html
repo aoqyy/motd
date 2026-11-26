@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/svg+xml" href="docs/favicon.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>motd</title>
@@ -30,6 +29,7 @@
     <section class="card" id="deadlines"></section>
     <section class="card" id="weather"></section>
     <section class="card" id="links"></section>
+    <section class="card card--wide" id="activity"></section>
   </main>
 
   <dialog id="settings">
@@ -51,9 +51,20 @@
       <label>links <span class="muted">// title | url, one per line</span>
         <textarea name="links" rows="4" placeholder="github | github.com"></textarea>
       </label>
-      
+
+      <label>link brackets
+        <select name="linkStyle">
+          <option value="[]">[github]</option>
+          <option value="{}">{github}</option>
+        </select>
+      </label>
+
       <label>prefixes <span class="muted">// key | url with %s, one per line</span>
         <textarea name="prefixes" rows="3" placeholder="so | https://stackoverflow.com/search?q=%s"></textarea>
+      </label>
+
+      <label>github <span class="muted">// username for the activity grid</span>
+        <input name="github" autocomplete="off" placeholder="aoqyy">
       </label>
 
       <div class="settings__row">
@@ -77,6 +88,7 @@
   <script src="widgets/deadlines.js"></script>
   <script src="widgets/links.js"></script>
   <script src="widgets/weather.js"></script>
+  <script src="widgets/activity.js"></script>
   <script src="widgets/summary.js"></script>
   <script src="app.js"></script>
   <script src="settings.js"></script>

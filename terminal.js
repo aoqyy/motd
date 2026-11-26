@@ -18,6 +18,7 @@ add       <YYYY-MM-DD | +days> <title> e.g. add +3 report
 done      <title>                      remove a deadline
 prefix    list | add <key> <url> | rm <key>
                                        e.g. prefix add so https://stackoverflow.com/search?q=%s
+activity  <github username>            show your contribution grid
 weather   <city>                       change city
 name      <name>                       change your name
 settings                               open settings
@@ -90,8 +91,11 @@ function ensureOwnData() {
   if (!data.demo) return "";
   data.deadlines = [];
   data.links = [];
+  data.github = "";
   data.demo = false;
   $("demo-badge").hidden = true;
+  renderLinks($("links"), data);
+  updateActivity($("activity"), data);
   return "\n→ demo cleared, this page is yours now";
 }
 
@@ -177,6 +181,20 @@ const COMMANDS = {
     }
 
     return "✗ usage: prefix [list | add <key> <url> | rm <key>]";
+  },
+
+  activity(args) {
+    if (!args.length) {
+      return data.github ? `→ @${data.github}` : "✗ usage: activity <github username>";
+    }
+    const user = cleanGithubUser(args[0]);
+    if (!user) return `✗ not a github username: ${args[0]}`;
+
+    const note = ensureOwnData();
+    data.github = user;
+    save();
+    updateActivity($("activity"), data);
+    return `→ loading activity for @${user}${note}`;
   },
 
   weather(args) {

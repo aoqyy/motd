@@ -28,6 +28,7 @@ C:\aoki\motd> yt lofi hip hop
 | `name aoki`                                               | change your name                                           |
 | `settings` · `help` · `clear`                             | open settings · show help · clear output                   |
 | `prefix` · `prefix add so <url with %s>` · `prefix rm so` | list, add or remove your own search prefixes               |
+| `activity user123`                                        | show the GitHub contribution grid for a user123            |
 
 - dim inline suggestions from your history and commands, accept with `Tab` or `→`
 - `↑` `↓` to walk through history
@@ -41,6 +42,7 @@ C:\aoki\motd> yt lofi hip hop
 - **deadlines**: sorted by date with a countdown, urgent ones highlighted, overdue struck through
 - **weather**: any city via [Open-Meteo](https://open-meteo.com), cached for 30 minutes, works offline with the last known data
 - **links**: your quick links in one row
+- **activity**: your GitHub contribution grid for the last year, via [github-contributions-api](https://github.com/grubersjoe/github-contributions-api)
 
 Plus a **settings** dialog to edit everything at once, with export / import of a JSON backup.
 Dark and light theme follow your system.
@@ -76,14 +78,14 @@ widgets/          one file per widget
 
 - [x] terminal with search prefixes, history and suggestions
 - [x] custom search prefixes in settings
+- [x] GitHub contributions
 - [ ] scratch note
-- [ ] GitHub contributions
 - [ ] toggle and reorder widgets
 - [ ] browser extension for the new tab page
 
 ## Credits
 
-Weather by [Open-Meteo](https://open-meteo.com) · font [JetBrains Mono](https://www.jetbrains.com/lp/mono/)
+Weather by [Open-Meteo](https://open-meteo.com) · font [JetBrains Mono](https://www.jetbrains.com/lp/mono/) · contributions by [github-contributions-api](https://github.com/grubersjoe/github-contributions-api).
 
 ## License
 

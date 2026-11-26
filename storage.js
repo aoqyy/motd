@@ -17,15 +17,15 @@ function migrateLegacyKeys() {
 
 migrateLegacyKeys();
 
-// saved data on top of demo defaults; demo flag tells the UI which one is shown
+// saved data on top of defaults, or the demo if nothing is saved yet
 function loadData() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) return { ...DEMO_DATA, ...JSON.parse(saved), demo: false };
+    if (saved) return { ...DEFAULTS, ...JSON.parse(saved), demo: false };
   } catch (e) {
     console.warn("failed to read saved data", e);
   }
-  return { ...DEMO_DATA, demo: true };
+  return { ...DEFAULTS, ...DEMO_DATA, demo: true };
 }
 
 function saveData(data) {

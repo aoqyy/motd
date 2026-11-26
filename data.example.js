@@ -7,10 +7,19 @@ function daysFromNow(n) {
   return `${d.getFullYear()}-${mm}-${dd}`;
 }
 
-// what visitors see; real user data lives only in localStorage
-const DEMO_DATA = {
+// base values for everyone; saved data is applied on top
+const DEFAULTS = {
   name: "guest",
   city: { name: "Saint Petersburg", lat: 59.94, lon: 30.31 },
+  deadlines: [],
+  links: [],
+  prefixes: [],    // custom search prefixes: { key, url } where url contains %s
+  github: "",      // username for the activity grid
+  linkStyle: "[]", // brackets around links: "[]" or "{}"
+};
+
+// what visitors see until they add their own data
+const DEMO_DATA = {
   deadlines: [
     { date: daysFromNow(0), title: "submit report" },
     { date: daysFromNow(3), title: "project deadline" },
@@ -22,6 +31,6 @@ const DEMO_DATA = {
     { title: "youtube", url: "https://youtube.com" },
     { title: "mail", url: "https://mail.google.com" },
     { title: "translate", url: "https://translate.google.com" },
-  ],  
-  prefixes: [], // custom search prefixes: { key, url } where url contains %s
+  ],
+  github: "torvalds",
 };

@@ -1,3 +1,5 @@
+const LINK_STYLES = ["[]", "{}"];
+
 // "github.com" -> "https://github.com"; anything that isn't http(s) is dropped
 function safeUrl(raw) {
   const url = /^[a-z]+:\/\//i.test(raw) ? raw : `https://${raw}`;
@@ -15,6 +17,7 @@ function initLinks(el) {
 
 function renderLinks(el, data) {
   const nav = el.querySelector(".links");
+  const [open, close] = LINK_STYLES.includes(data.linkStyle) ? data.linkStyle : "[]";
   const links = data.links
     .map((l) => ({ title: l.title, href: safeUrl(l.url) }))
     .filter((l) => l.href);
@@ -27,7 +30,7 @@ function renderLinks(el, data) {
   nav.replaceChildren(...links.map(({ title, href }) => {
     const a = document.createElement("a");
     a.href = href;
-    a.textContent = `[${title}]`;
+    a.textContent = `${open}${title}${close}`;
     return a;
   }));
 }

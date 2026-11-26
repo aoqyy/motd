@@ -9,6 +9,7 @@ initProgress($("progress"));
 initDeadlines($("deadlines"));
 initLinks($("links"));
 initWeather($("weather"));
+initActivity($("activity"));
 
 renderLinks($("links"), data); // links don't depend on time, render once
 
@@ -23,6 +24,9 @@ function tick() {
 tick();
 setInterval(tick, 1000);
 
-// weather is cached, so this only hits the API when the cache is stale
+// weather and activity are cached, so these only hit the APIs when the cache is stale
 updateWeather($("weather"), data);
 setInterval(() => updateWeather($("weather"), data), WEATHER_TTL);
+
+updateActivity($("activity"), data);
+setInterval(() => updateActivity($("activity"), data), ACTIVITY_TTL);
