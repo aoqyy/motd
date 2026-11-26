@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>start</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="path">
+    <span id="path"></span><span class="cursor">_</span>
+    <span class="badge" id="demo-badge" hidden>demo</span>
+  </header>
+
+  <main class="grid">
+    <section class="card card--wide" id="clock"></section>
+    <section class="card" id="progress"></section>
+    <section class="card"><h2>deadlines</h2><p class="muted">// soon</p></section>
+    <section class="card"><h2>weather</h2><p class="muted">// soon</p></section>
+    <section class="card"><h2>links</h2><p class="muted">// soon</p></section>
+  </main>
+
+  <script src="data.example.js"></script>
+  <script src="storage.js"></script>
+  <script src="widgets/clock.js"></script>
+  <script src="widgets/progress.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
