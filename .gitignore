@@ -1,0 +1,9 @@
+# personal backups from [export], never commit these
+start-backup-*.json
+
+# editor
+.vscode/
+
+# windows junk
+Thumbs.db
+desktop.ini
