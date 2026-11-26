@@ -1,4 +1,4 @@
-const WEATHER_CACHE_KEY = "start:weather";
+const WEATHER_CACHE_KEY = "motd:weather";
 const WEATHER_TTL = 30 * 60 * 1000; // refetch every 30 minutes
 
 // WMO weather codes used by Open-Meteo

@@ -1,7 +1,7 @@
 const data = loadData();
 const $ = (id) => document.getElementById(id);
 
-$("path").textContent = `C:\\${data.name}\\start`;
+$("path").textContent = `C:\\${data.name}\\motd`;
 $("demo-badge").hidden = !data.demo;
 
 initClock($("clock"));

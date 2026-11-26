@@ -1,4 +1,5 @@
 # personal backups from [export], never commit these
+motd-backup-*.json
 start-backup-*.json
 
 # editor

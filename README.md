@@ -1,11 +1,11 @@
-# start
+# motd
 
-A minimal terminal-style start page for your browser.
+**m**essage **o**f **t**he **d**ay: a minimal terminal-style start page for your browser.
 Clock, progress, deadlines, weather and links in one place. No accounts, no server, your data never leaves your browser.
 
-**[→ live demo](https://aoqyy.github.io/start/)**
+**[→ live demo](https://aoqyy.github.io/motd/)**
 
-![start page screenshot](docs/screenshot.png)
+![motd screenshot](docs/screenshot.png)
 
 ## Features
 
@@ -25,7 +25,7 @@ Use `[export]` to back up your data or move it to another browser.
 
 ## Usage
 
-1. Open the [live demo](https://aoqyy.github.io/start/) and click `[settings]`
+1. Open the [live demo](https://aoqyy.github.io/motd/) and click `[settings]`
 2. Add your name, city, deadlines (`2026-12-25 | exam`) and links (`github | github.com`)
 3. Set the page as your browser's home / startup page
 
@@ -54,3 +54,7 @@ widgets/          one file per widget
 ## Credits
 
 Weather by [Open-Meteo](https://open-meteo.com) · font [JetBrains Mono](https://www.jetbrains.com/lp/mono/)
+
+## License
+
+[MIT](LICENSE)

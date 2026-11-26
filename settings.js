@@ -43,7 +43,7 @@ function exportData() {
   const blob = new Blob([JSON.stringify(clean, null, 2)], { type: "application/json" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = `start-backup-${new Date().toISOString().slice(0, 10)}.json`;
+  a.download = `motd-backup-${new Date().toISOString().slice(0, 10)}.json`;
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
@@ -55,7 +55,7 @@ async function importData() {
     saveData(JSON.parse(await file.text()));
     location.reload();
   } catch {
-    alert("this doesn't look like a start backup");
+    alert("this doesn't look like a motd backup");
   }
 }
 
