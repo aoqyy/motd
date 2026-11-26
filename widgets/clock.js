@@ -8,9 +8,12 @@ function greeting(hour) {
 
 function initClock(el) {
   el.innerHTML = `
-    <div class="clock__time"></div>
-    <div class="clock__date"></div>
-    <div class="clock__hello"></div>`;
+    <div class="clock__main">
+      <div class="clock__time"></div>
+      <div class="clock__date"></div>
+      <div class="clock__hello"></div>
+    </div>
+    <div class="clock__summary"></div>`;
 }
 
 function renderClock(el, data, now) {

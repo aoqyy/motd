@@ -1,6 +1,9 @@
 const WEATHER_CACHE_KEY = "motd:weather";
 const WEATHER_TTL = 30 * 60 * 1000; // refetch every 30 minutes
 
+// last shown weather, used by the summary next to the clock
+let lastWeather = null;
+
 // WMO weather codes used by Open-Meteo
 const WEATHER_CODES = {
   0: "clear", 1: "mostly clear", 2: "partly cloudy", 3: "overcast",
@@ -67,23 +70,26 @@ function initWeather(el) {
   el.innerHTML = `
     <h2>weather</h2>
     <div class="weather__temp"></div>
-    <div class="weather__desc"></div>
+    <div class="weather__desc muted">// loading…</div>
     <div class="weather__meta muted"></div>
     <div class="weather__meta muted"></div>`;
 }
 
 function showWeather(el, city, weather, note) {
+  lastWeather = weather;
+  const desc = el.querySelector(".weather__desc");
   const [meta1, meta2] = el.querySelectorAll(".weather__meta");
   el.querySelector(".weather__temp").textContent = deg(weather.temp);
-  el.querySelector(".weather__desc").textContent = WEATHER_CODES[weather.code] ?? "unknown";
+  desc.className = "weather__desc";
+  desc.textContent = WEATHER_CODES[weather.code] ?? "unknown";
   meta1.textContent = `feels ${deg(weather.feels)} · wind ${Math.round(weather.wind)} m/s`;
   meta2.textContent = `${deg(weather.min)} / ${deg(weather.max)} · ${city.name}${note ? ` · ${note}` : ""}`;
 }
 
 function showWeatherMessage(el, text) {
+  lastWeather = null;
   initWeather(el);
   el.querySelector(".weather__desc").textContent = `// ${text}`;
-  el.querySelector(".weather__desc").className = "weather__desc muted";
 }
 
 async function updateWeather(el, data) {

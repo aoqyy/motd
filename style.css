@@ -7,17 +7,27 @@
 }
 
 @media (prefers-color-scheme: light) {
-  :root { --bg: #fff; --fg: #000; --muted: #888; --line: #ddd; }
+  :root { --bg: #fff; --fg: #000; --muted: #666; --line: #ddd; }
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* page is centered vertically, like a start screen */
 body {
   background: var(--bg);
   color: var(--fg);
   font-family: "JetBrains Mono", monospace;
   min-height: 100vh;
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.path, .grid {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
 }
 
 /* header */
@@ -25,8 +35,7 @@ body {
   display: flex;
   align-items: baseline;
   color: var(--muted);
-  max-width: 72rem;
-  margin: 0 auto 2rem;
+  margin-bottom: 2rem;
 }
 .cursor { animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
@@ -38,13 +47,11 @@ body {
   font-size: 0.75rem;
 }
 
-/* layout */
+/* layout: clock on top, then two columns */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
-  max-width: 72rem;
-  margin: 0 auto;
 }
 
 .card {
@@ -66,10 +73,23 @@ body {
 
 .muted { color: var(--muted); }
 
-/* clock */
+/* clock: time on the left, summary on the right */
+#clock {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1.5rem 2rem;
+}
 .clock__time { font-size: 4rem; font-weight: 700; line-height: 1; }
 .clock__date { margin-top: 0.5rem; color: var(--muted); }
 .clock__hello { margin-top: 1rem; }
+.clock__summary {
+  text-align: right;
+  white-space: pre-line;
+  line-height: 1.6;
+  color: var(--muted);
+}
 
 /* progress: a line is 32 chars, one char ≈ 0.6em -> ~20em fits the card */
 .progress {
@@ -85,6 +105,11 @@ body {
 .list .when { color: var(--muted); white-space: nowrap; }
 .list .urgent .when { color: var(--fg); font-weight: 700; }
 .list .past { color: var(--muted); text-decoration: line-through; }
+
+/* weather */
+.weather__temp { font-size: 2.5rem; font-weight: 700; line-height: 1; }
+.weather__desc { margin: 0.5rem 0; }
+.weather__meta { font-size: 0.85rem; }
 
 /* links */
 .links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; }
@@ -125,7 +150,10 @@ dialog::backdrop { background: rgb(0 0 0 / 0.7); }
 }
 .settings input:focus, .settings textarea:focus { outline: none; border-color: var(--fg); }
 .settings__row { display: flex; gap: 1rem; justify-content: flex-end; }
-/* weather */
-.weather__temp { font-size: 2.5rem; font-weight: 700; line-height: 1; }
-.weather__desc { margin: 0.5rem 0; }
-.weather__meta { font-size: 0.85rem; }
+
+/* phones: one column, summary goes under the clock */
+@media (max-width: 40rem) {
+  body { padding: 1rem; }
+  .grid { grid-template-columns: 1fr; }
+  .clock__summary { text-align: left; }
+}

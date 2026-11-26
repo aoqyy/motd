@@ -15,6 +15,7 @@ renderLinks($("links"), data); // links don't depend on time, render once
 function tick() {
   const now = new Date();
   renderClock($("clock"), data, now);
+  renderSummary($("clock"), data, now);
   renderProgress($("progress"), data, now);
   renderDeadlines($("deadlines"), data, now);
 }
