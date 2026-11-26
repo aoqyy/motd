@@ -20,9 +20,10 @@ weather   <city>                       change city
 name      <name>                       change your name
 settings                               open settings
 clear                                  clear this output
-anything else searches google · ↑↓ history · tab completes · ctrl+enter opens in a new tab`;
+anything else searches google · ↑↓ history · tab or → accepts hint · ctrl+enter opens in a new tab`;
 
 const cmdInput = document.getElementById("cmd");
+const ghost = document.getElementById("cmd-ghost");
 const output = document.getElementById("output");
 
 let history = loadHistory();
@@ -206,27 +207,47 @@ function completions(value) {
   return words.filter((w) => w.toLowerCase().startsWith(lower));
 }
 
-function commonPrefix(list) {
-  let prefix = list[0];
-  for (const s of list) {
-    while (!s.toLowerCase().startsWith(prefix.toLowerCase())) prefix = prefix.slice(0, -1);
+// best single guess: latest matching history entry first, then completions
+function suggestion(value) {
+  if (!value) return "";
+  const lower = value.toLowerCase();
+  const longer = (s) => s.length > value.length && s.toLowerCase().startsWith(lower);
+
+  for (let i = history.length - 1; i >= 0; i--) {
+    if (longer(history[i])) return history[i];
   }
-  return prefix;
+  return completions(value).find(longer) ?? "";
+}
+
+function updateGhost() {
+  const value = cmdInput.value;
+  const hint = suggestion(value);
+
+  // hide when the caret isn't at the end or the text is scrolled
+  const atEnd = cmdInput.selectionStart === value.length;
+  if (!hint || !atEnd || cmdInput.scrollLeft > 0) {
+    ghost.replaceChildren();
+    return;
+  }
+
+  const typed = document.createElement("span");
+  typed.className = "cmd-ghost__typed";
+  typed.textContent = value;
+  ghost.replaceChildren(typed, hint.slice(value.length));
+}
+
+function acceptHint() {
+  const hint = suggestion(cmdInput.value);
+  if (!hint) return false;
+  cmdInput.value = hint;
+  updateGhost();
+  return true;
 }
 
 function complete() {
   const options = [...new Set(completions(cmdInput.value))];
-  if (!options.length) return;
-
-  if (options.length === 1) {
-    cmdInput.value = `${options[0]} `;
-    print("");
-    return;
-  }
-
-  const prefix = commonPrefix(options);
-  if (prefix.length > cmdInput.value.length) cmdInput.value = prefix;
-  print(options.join("   "));
+  acceptHint();
+  print(options.length > 1 ? options.join("   ") : "");
 }
 
 cmdInput.addEventListener("keydown", (e) => {
@@ -234,23 +255,34 @@ cmdInput.addEventListener("keydown", (e) => {
     e.preventDefault();
     const line = cmdInput.value;
     cmdInput.value = "";
+    updateGhost();
     run(line, e.ctrlKey || e.metaKey);
   } else if (e.key === "Tab" && cmdInput.value) {
     // empty input: let Tab move focus as usual
     e.preventDefault();
     complete();
+  } else if (e.key === "ArrowRight" && cmdInput.selectionStart === cmdInput.value.length) {
+    if (acceptHint()) e.preventDefault();
   } else if (e.key === "ArrowUp") {
     e.preventDefault();
     if (historyPos > 0) cmdInput.value = history[--historyPos];
+    updateGhost();
   } else if (e.key === "ArrowDown") {
     e.preventDefault();
     historyPos = Math.min(history.length, historyPos + 1);
     cmdInput.value = history[historyPos] ?? "";
+    updateGhost();
   } else if (e.key === "Escape") {
     cmdInput.value = "";
+    updateGhost();
     print("");
   }
 });
+
+cmdInput.addEventListener("input", updateGhost);
+cmdInput.addEventListener("click", updateGhost);
+cmdInput.addEventListener("blur", () => ghost.replaceChildren());
+cmdInput.addEventListener("focus", updateGhost);
 
 // typing anywhere on the page goes to the terminal
 document.addEventListener("keydown", (e) => {

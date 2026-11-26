@@ -12,8 +12,11 @@
   <header class="term">
     <div class="term__line">
       <label class="term__prompt" for="cmd" id="path"></label>
-      <input id="cmd" class="cmd" autocomplete="off" spellcheck="false" autofocus
-             placeholder="type help" aria-label="command">
+      <div class="cmd-wrap">
+        <span class="cmd-ghost" id="cmd-ghost" aria-hidden="true"></span>
+        <input id="cmd" class="cmd" autocomplete="off" spellcheck="false" autofocus
+               placeholder="type help" aria-label="command">
+      </div>
       <span class="badge" id="demo-badge" hidden>demo</span>
       <button class="btn" id="settings-btn">[settings]</button>
     </div>
