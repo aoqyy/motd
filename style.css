@@ -20,7 +20,14 @@ body {
   padding: 2rem;
 }
 
-.path { color: var(--muted); max-width: 72rem; margin: 0 auto 2rem; }
+.path {
+  display: flex;
+  align-items: baseline;
+  color: var(--muted);
+  max-width: 72rem;
+  margin: 0 auto 2rem;
+}
+
 .cursor { animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 
@@ -42,13 +49,13 @@ body {
 .card { border: 1px solid var(--line); padding: 1.25rem; }
 .card--wide { grid-column: 1 / -1; }
 
-.card h2 {
+.card h2, .settings h2 {
   font-size: 0.85rem;
   font-weight: 400;
   color: var(--muted);
   margin-bottom: 0.75rem;
 }
-.card h2::before { content: "> "; }
+.card h2::before, .settings h2::before { content: "> "; }
 
 .muted { color: var(--muted); }
 
@@ -56,4 +63,44 @@ body {
 .clock__date { margin-top: 0.5rem; color: var(--muted); }
 .clock__hello { margin-top: 1rem; }
 
-.progress { font-family: inherit; line-height: 1.6; }
+.card { min-width: 0; overflow: hidden; container-type: inline-size; }
+
+/* строка = 32 символа, символ JetBrains Mono ≈ 0.6em → 32 × 0.6 ≈ 19.2em, берём 20 с запасом */
+.progress {
+  font-family: inherit;
+  line-height: 1.6;
+  font-size: min(1rem, 100cqi / 20);
+}
+
+.btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+}
+.btn:hover, .btn--main { color: var(--fg); }
+#settings-btn { margin-left: auto; }
+
+dialog {
+  margin: auto;
+  width: min(36rem, 90vw);
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  padding: 1.5rem;
+}
+dialog::backdrop { background: rgb(0 0 0 / 0.7); }
+
+.settings { display: flex; flex-direction: column; gap: 1rem; }
+.settings label { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.85rem; }
+.settings input, .settings textarea {
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--line);
+  font: inherit;
+  padding: 0.5rem;
+  resize: vertical;
+}
+.settings input:focus, .settings textarea:focus { outline: none; border-color: var(--fg); }
+.settings__row { display: flex; gap: 1rem; justify-content: flex-end; }

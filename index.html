@@ -12,6 +12,7 @@
   <header class="path">
     <span id="path"></span><span class="cursor">_</span>
     <span class="badge" id="demo-badge" hidden>demo</span>
+    <button class="btn" id="settings-btn">[settings]</button>
   </header>
 
   <main class="grid">
@@ -22,10 +23,45 @@
     <section class="card"><h2>links</h2><p class="muted">// soon</p></section>
   </main>
 
+  <dialog id="settings">
+    <form method="dialog" class="settings">
+      <h2>settings</h2>
+
+      <label>name
+        <input name="username" maxlength="20" autocomplete="off">
+      </label>
+
+      <label>city
+        <input name="city" autocomplete="off">
+      </label>
+
+      <label>deadlines <span class="muted">// дата | название, по одному в строке</span>
+        <textarea name="deadlines" rows="4" placeholder="2026-12-25 | экзамен"></textarea>
+      </label>
+
+      <label>links <span class="muted">// название | ссылка</span>
+        <textarea name="links" rows="4" placeholder="github | https://github.com"></textarea>
+      </label>
+
+      <div class="settings__row">
+        <button type="button" class="btn" id="export-btn">[export]</button>
+        <button type="button" class="btn" id="import-btn">[import]</button>
+        <button type="button" class="btn" id="reset-btn">[reset]</button>
+        <input type="file" id="import-file" accept=".json" hidden>
+      </div>
+
+      <div class="settings__row">
+        <button value="cancel" class="btn">[cancel]</button>
+        <button type="button" class="btn btn--main" id="save-btn">[save]</button>
+      </div>
+    </form>
+  </dialog>
+
   <script src="data.example.js"></script>
   <script src="storage.js"></script>
   <script src="widgets/clock.js"></script>
   <script src="widgets/progress.js"></script>
   <script src="app.js"></script>
+  <script src="settings.js"></script>
 </body>
 </html>
