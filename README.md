@@ -1,9 +1,5 @@
 # start
 
-Web browser homepage, keeps everything essential in one place, saves data locally.
-
-# start
-
 A minimal terminal-style start page for your browser.
 Clock, progress, deadlines, weather and links in one place. No accounts, no server, your data never leaves your browser.
 
