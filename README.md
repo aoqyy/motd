@@ -1,4 +1,24 @@
-# motd
+<p align="center">
+  <img src="docs/banner.svg" alt="motd: message of the day" width="800">
+</p>
+
+<p align="center">
+  <a href="https://aoqyy.github.io/motd/"><img src="https://img.shields.io/badge/demo-live-000?style=flat-square" alt="live demo"></a>
+  <a href="https://github.com/aoqyy/motd/releases/latest"><img src="https://img.shields.io/github/v/release/aoqyy/motd?style=flat-square&color=000&label=release" alt="latest release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/aoqyy/motd?style=flat-square&color=000" alt="MIT license"></a>
+  <img src="https://img.shields.io/badge/vanilla-JavaScript-000?style=flat-square&logo=javascript" alt="vanilla JavaScript">
+  <img src="https://img.shields.io/badge/dependencies-0-000?style=flat-square" alt="zero dependencies">
+  <img src="https://img.shields.io/badge/hosted_on-GitHub_Pages-000?style=flat-square&logo=github" alt="hosted on GitHub Pages">
+  <a href="https://github.com/aoqyy/motd/commits/main"><img src="https://img.shields.io/github/last-commit/aoqyy/motd?style=flat-square&color=000" alt="last commit"></a>
+</p>
+
+<p align="center">
+  <a href="#terminal">Terminal</a> ·
+  <a href="#widgets">Widgets</a> ·
+  <a href="#privacy">Privacy</a> ·
+  <a href="#usage">Usage</a> ·
+  <a href="#roadmap">Roadmap</a>
+</p>
 
 **m**essage **o**f **t**he **d**ay: a minimal terminal-style start page for your browser.
 Type commands, search anything, keep your deadlines, weather, links and GitHub activity in one place.
@@ -73,6 +93,7 @@ settings.js       settings dialog, export / import
 terminal.js       command line: commands, search, prefixes, history, suggestions
 app.js            starts widgets and the update loop
 widgets/          one file per widget
+docs/             banner and screenshot for this readme
 ```
 
 ## Roadmap
@@ -86,7 +107,7 @@ widgets/          one file per widget
 
 ## Credits
 
-Weather by [Open-Meteo](https://open-meteo.com) · contributions by [github-contributions-api](https://github.com/grubersjoe/github-contributions-api) · font [JetBrains Mono](https://www.jetbrains.com/lp/mono/)
+Weather by [Open-Meteo](https://open-meteo.com) · contributions by [github-contributions-api](https://github.com/grubersjoe/github-contributions-api) · font [JetBrains Mono](https://www.jetbrains.com/lp/mono/) · badges by [shields.io](https://shields.io)
 
 ## License
 

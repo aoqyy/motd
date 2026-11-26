@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200" role="img" aria-label="motd: message of the day">
+  <rect width="800" height="200" rx="10" fill="#000"/>
+  <rect x="0.5" y="0.5" width="799" height="199" rx="10" fill="none" stroke="#2a2a2a"/>
+
+  <g font-family="JetBrains Mono, Consolas, Menlo, monospace">
+    <!-- prompt line -->
+    <text x="40" y="52" font-size="16" fill="#777">C:\guest\motd&gt; <tspan fill="#fff">help</tspan></text>
+
+    <!-- title with a blinking block cursor -->
+    <text x="40" y="128" font-size="64" font-weight="700" fill="#fff">motd</text>
+    <rect x="200" y="82" width="30" height="52" fill="#fff">
+      <animate attributeName="opacity" values="1;0" keyTimes="0;0.5" dur="1s" calcMode="discrete" repeatCount="indefinite"/>
+    </rect>
+
+    <text x="40" y="164" font-size="16" fill="#777">message of the day · a terminal-style start page</text>
+
+    <!-- a peek at the widgets -->
+    <g font-size="14" fill="#777">
+      <text x="520" y="80">-3° light snow</text>
+      <text x="520" y="104">2 due today</text>
+      <text x="520" y="128">day  <tspan fill="#fff">████████</tspan>░░░ 72%</text>
+      <text x="520" y="152">year <tspan fill="#fff">██████████</tspan>░ 90%</text>
+    </g>
+  </g>
+</svg>
